@@ -56,11 +56,11 @@
 На остновном узле включаем режим архивирования WAL и настраиваем копирование(scp) на резервный узел.
 
 gkt53/postgres_conf :
-'''
+```
 wal_level = replica
 archive_mode = on
 archive_command = 'scp %p postgres1@pg193:~/lab3/pg_wal/%f'
-'''
+```
 
 
   
