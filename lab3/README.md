@@ -61,7 +61,68 @@ wal_level = replica
 archive_mode = on
 archive_command = 'scp %p postgres1@pg193:~/lab3/pg_wal/%f'
 ```
+Cоздать первоначальную резервную копию (pg_basebackup) и скопировать на резервный узел (rsync)
+backup.sh :
+```
+pw_dir=$(pwd)
 
+cd ~
 
-  
+#Запустить БД
+pg_ctl start -D gkt53
 
+rm -r ./backup/*
+
+#создать первоначальную резервную копию
+pg_basebackup -F tar -h localhost -p 9160 -D ./backup -P -X stream
+
+echo "Скрипт создания резервной копии завершил работу"
+
+cd $pw_dir
+```
+untar_and_clean.sh :
+```
+pw_dir=$(pwd)
+
+cd backup
+
+mkdir fzi37
+cd fzi37/
+tar xf ../16394.tar
+
+cd ..
+
+mkdir upc28
+cd upc28/
+tar xf ../16395.tar
+
+cd ..
+
+mkdir tqh1
+cd tqh1/
+tar xf ../16399.tar
+
+cd ..
+
+mkdir gkt53
+cd gkt53
+tar xf ../base.tar
+
+cd ..
+
+cd pg_wal
+tar xf ../../pg_wal.tar
+
+cd ..
+
+rm -r *.tar
+
+cd ../..
+
+#скопировать на резервный узел
+rsync -avz ./backup/ postgres1@pg193:~/reserve_backup/
+
+echo "Скрипт разархивирования резервной копии завершил работу"
+
+cd $pw_dir
+```
