@@ -86,8 +86,8 @@ pw_dir=$(pwd)
 
 cd backup
 
-mkdir fzi37
-cd fzi37/
+mkdir fip41
+cd fip41/
 tar xf ../16394.tar
 
 cd ..
@@ -125,4 +125,7 @@ rsync -avz ./backup/ postgres1@pg193:~/reserve_backup/
 echo "Скрипт разархивирования резервной копии завершил работу"
 
 cd $pw_dir
+
 ```
+Этап 2. Потеря основного узла
+
